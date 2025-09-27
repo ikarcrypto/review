@@ -140,7 +140,7 @@
       </div>
       <div class="cta">
         <button class="btn btn-ghost" onclick="scrollToId('testimonials')">Reviews</button>
-        <button class="btn btn-primary" onclick="scrollToId('buy')">Buy</button>
+        <a class="btn btn-primary" href="https://pump.fun/coin/Ckkr2A4fcAdthCHARKtnbf9agLRRSEP9RPWoRAunpump" target="_blank" rel="noopener">Buy</a>
       </div>
     </nav>
   </header>
@@ -161,7 +161,7 @@
         <h1 class="title">Everyone's got an opinion.<br/>Now make it on‑chain for <span style="color:var(--accent)" id="coinTitle">$REVIEW</span>.</h1>
         <p class="subtitle">Each coin has its own live review wall. Share your take, rate it, and watch sentiment move in real‑time.</p>
         <div class="hero-cta" id="buy">
-          <button class="btn btn-primary" id="buyBtn">Buy <span id="buyLabel">$REVIEW</span></button>
+          <a class="btn btn-primary" id="buyBtn" href="https://pump.fun/coin/Ckkr2A4fcAdthCHARKtnbf9agLRRSEP9RPWoRAunpump" target="_blank" rel="noopener">Buy <span id="buyLabel">$REVIEW</span></a>
           <button class="btn btn-ghost" onclick="copyCA()">Copy CA</button>
           <span class="ca" id="ca">CA: Ckkr2A4fcAdthCHARKtnbf9agLRRSEP9RPWoRAunpump</span>
         </div>
@@ -253,6 +253,8 @@
             <button class="btn-small btn-accent" type="submit">Post Review</button>
           </div>
         </form>
+
+          <div class="avg-rating" id="avgRating">Average rating: —</div>
 
         <div id="reviewsList" class="live-list"></div>
       </div>
@@ -438,6 +440,14 @@
           `;
           list.appendChild(d);
         });
+
+        const rated = items.filter((item)=> Number.isFinite(+item.rating));
+        if(rated.length){
+          const avg = rated.reduce((sum, item)=> sum + (+item.rating||0), 0) / rated.length;
+          $('avgRating').textContent = `Average rating: ${avg.toFixed(1)} / 5 (${rated.length} review${rated.length===1?'':'s'})`;
+        } else {
+          $('avgRating').textContent = 'Average rating: —';
+        }
       };
 
       // wire form
