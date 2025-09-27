@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>REVIEW COIN</title>
-  <meta name="description" content="REVIEW COIN — rate it, roast it, reward it." />
+  <title>REVIEW – Multi‑Coin Reviews</title>
+  <meta name="description" content="Rate any coin: live reviews per‑coin. REVIEW – rate it, roast it, reward it." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -30,22 +30,34 @@
 
     /* Header */
     header { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: linear-gradient(180deg, #000000b3, #00000000); border-bottom: 1px solid #1c1c1c; }
-    .nav { max-width: 1100px; margin: 0 auto; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .nav { max-width: 1100px; margin: 0 auto; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap:12px; }
     .brand { display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:1px; }
     .brand .logo { width:28px; height:28px; }
     .cta { display:flex; gap:10px; align-items:center; }
-    .btn { cursor:pointer; border:none; font-weight:800; letter-spacing:.3px; padding:10px 14px; border-radius:14px; }
+    .btn { cursor:pointer; border:none; font-weight:800; letter-spacing:.3px; padding:10px 14px; border-radius:14px; transition: all 0.2s ease; }
     .btn-primary { background: var(--accent); color:#0a0a0a; box-shadow: 0 0 40px #ffd54f40, inset 0 -6px 14px #00000033; }
-    .btn-ghost { background:#111; color:#f4f0db; border:1px solid #222; }
+    .btn-ghost { background:#111; color:#f4f0db; border:1px solid #222; position: relative; }
+    
+    /* Hover effect for switch button */
+    .btn-ghost:hover .btn-text { opacity: 0; }
+    .btn-ghost .btn-hover-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+    .btn-ghost:hover .btn-hover-text { opacity: 1; }
+    .btn-ghost .btn-text { transition: opacity 0.2s ease; }
+
+    /* Coin switcher */
+    .switcher { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .switcher input { background:#0d0d0d; color:#ffefb5; border:1px solid #2a2415; border-radius:12px; padding:10px 12px; font: inherit; outline:none; min-width:160px; }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#141109; border:1px solid #2a2415; box-shadow: 0 0 24px #ffd54f1f; font-size: 12px; color:#ffefb5 }
+    .chips { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { cursor:pointer; padding:6px 10px; border-radius:999px; border:1px solid #2a2415; background:#0e0e0e; color:#ffefb5; font-size:12px; }
 
     /* Hero */
-    .hero { max-width:1100px; margin: 40px auto; padding: 0 18px; display:grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items:center; }
+    .hero { max-width:1100px; margin: 24px auto 0; padding: 0 18px 6px; display:grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items:center; }
     @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
 
-    .title { font-family: Nunito, Inter, sans-serif; font-size: clamp(28px, 4vw, 48px); line-height: .95; margin: 0 0 14px; text-shadow: 0 0 25px #ffd54f33; }
-    .subtitle { color:var(--muted); font-size: clamp(14px, 2.2vw, 18px); margin-bottom: 18px; }
+    .title { font-family: Nunito, Inter, sans-serif; font-size: clamp(28px, 4vw, 48px); line-height: .95; margin: 0 0 10px; text-shadow: 0 0 25px #ffd54f33; }
+    .subtitle { color:var(--muted); font-size: clamp(14px, 2.2vw, 18px); margin: 0 0 14px; }
 
-    .pill { display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:#141109; border:1px solid #2a2415; box-shadow: 0 0 24px #ffd54f1f; font-size: 14px; color:#ffefb5 }
     .mode-pill { margin-left:8px; font-size:12px; padding:6px 10px; border-radius:999px; background:#111; border:1px solid #222; color:#ffed99 }
 
     .coin-wrap { position: relative; width: min(520px, 90vw); aspect-ratio: 1/1; margin: 0 auto; }
@@ -69,7 +81,7 @@
     .ca { display:flex; align-items:center; gap:10px; padding: 8px 10px; border-radius: 12px; background:#0e0e0e; border:1px solid #1f1f1f; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; color:#ffeaa8; }
 
     /* Sections */
-    .section { max-width:1100px; margin: 40px auto 80px; padding: 0 18px; }
+    .section { max-width:1100px; margin: 28px auto 80px; padding: 0 18px; }
     .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; }
     @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
 
@@ -123,7 +135,8 @@
     <nav class="nav">
       <div class="brand">
         <svg class="logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
-        <span>REVIEW COIN</span>
+        <span>REVIEW</span>
+        <span id="mode" class="mode-pill" title="Shows whether live backend is active">LOCAL MODE</span>
       </div>
       <div class="cta">
         <button class="btn btn-ghost" onclick="scrollToId('testimonials')">Reviews</button>
@@ -135,11 +148,20 @@
   <main>
     <section class="hero">
       <div>
-        <span class="pill">★★★★★ community rated</span>
-        <span id="mode" class="mode-pill" title="Shows whether live backend is active">LOCAL MODE</span>
-        <h1 class="title">Everyone's got an opinion.<br/>Now make it on‑chain with <span style="color:var(--accent)">$REVIEW</span>.</h1>
+        <div class="switcher" style="margin-bottom:10px">
+          <span class="pill">Viewing: <strong id="coinView">$REVIEW</strong></span>
+          <input id="coinInput" placeholder="Type a coin (e.g., SOL, BONK, GUD)" />
+          <button class="btn btn-ghost" id="switchBtn">
+            <span class="btn-text">Switch coin</span>
+            <span class="btn-hover-text">Coming Soon</span>
+          </button>
+        </div>
+        <div class="chips" id="recentChips" style="margin-bottom:10px"></div>
+
+        <h1 class="title">Everyone's got an opinion.<br/>Now make it on‑chain for <span style="color:var(--accent)" id="coinTitle">$REVIEW</span>.</h1>
+        <p class="subtitle">Each coin has its own live review wall. Share your take, rate it, and watch sentiment move in real‑time.</p>
         <div class="hero-cta" id="buy">
-          <button class="btn btn-primary">Buy $REVIEW</button>
+          <button class="btn btn-primary" id="buyBtn">Buy <span id="buyLabel">$REVIEW</span></button>
           <button class="btn btn-ghost" onclick="copyCA()">Copy CA</button>
           <span class="ca" id="ca">CA: REVIEW1111111111111111111111111111111111</span>
         </div>
@@ -200,8 +222,8 @@
 
     <!-- Live Reviews (real-time) -->
     <section class="section" id="live-reviews">
-      <h2 style="margin:0 0 10px; font-size: 22px; letter-spacing:.3px; color:#ffefb5">Live Reviews</h2>
-      <p class="subtitle" style="margin:0 0 12px">Drop your take. It appears instantly for everyone.</p>
+      <h2 style="margin:0 0 10px; font-size: 22px; letter-spacing:.3px; color:#ffefb5">Live Reviews for <span id="coinLive">$REVIEW</span></h2>
+      <p class="subtitle" style="margin:0 0 12px">Drop your take for this coin. It appears instantly for everyone viewing the same coin page.</p>
 
       <div class="review-wrap">
         <form class="review-form" id="reviewForm">
@@ -238,17 +260,32 @@
   </main>
 
   <footer>
-    <div>© <span id="yr"></span> REVIEW COIN — rate it, roast it, reward it.</div>
+    <div>© <span id="yr"></span> REVIEW — rate it, roast it, reward it.</div>
   </footer>
 
   <script>
-    // ======= Utilities =======
+    // ======= Config & Utilities =======
     const RATE_LIMIT_S = 30; // one post / 30s
-    const LS_KEY = 'review_reviews_v1';
+    const LS_PREFIX = 'review_reviews_';
+    const LS_RECENTS = 'review_recent_coins_v1';
     const sanitize = (s='') => s.replace(/[<>]/g, (m)=>({'<':'&lt;','>':'&gt;'}[m]));
     const fmtStars = (n=5) => '★★★★★'.slice(0, Math.max(0,Math.min(5, n|0))).padEnd(5,'☆');
 
-    // determine if Firebase config is present (user can paste values below)
+    // Optional: add known coin contract addresses here
+    const COIN_CA = {
+      REVIEW: 'REVIEW1111111111111111111111111111111111',
+      SOL: 'So11111111111111111111111111111111111111112', // example placeholder
+      BONK: 'BONKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // example placeholder
+    };
+
+    const DEFAULT_COIN = 'REVIEW';
+    const getCoinFromURL = () => (new URLSearchParams(location.search).get('coin')||'').toUpperCase().trim();
+    const setURLCoin = (coin) => {
+      const url = new URL(location.href);
+      url.searchParams.set('coin', coin);
+      history.replaceState(null, '', url);
+    };
+
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyCnYxmmKYDlK-iugecBjY6jBzT2UnfNvto",
       authDomain: "review-378ae.firebaseapp.com",
@@ -263,25 +300,28 @@
     const LocalProvider = {
       mode: 'LOCAL',
       async init(){ return true; },
-      subscribe(cb){
-        const data = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      subscribe(coinId, cb){
+        const key = LS_PREFIX + coinId;
+        const data = JSON.parse(localStorage.getItem(key) || '[]');
         cb(data.sort((a,b)=> (b.ts||0) - (a.ts||0)));
-        window.addEventListener('storage', (e)=>{ if(e.key===LS_KEY){ try{ cb(JSON.parse(e.newValue||'[]')); }catch{} } });
+        const handler = (e)=>{ if(e.key===key){ try{ cb(JSON.parse(e.newValue||'[]')); }catch{} } };
+        window.addEventListener('storage', handler);
+        return () => window.removeEventListener('storage', handler);
       },
-      async post({name,msg,rating}){
+      async post(coinId, {name,msg,rating}){
+        const key = LS_PREFIX + coinId;
         const now = Date.now();
-        const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+        const arr = JSON.parse(localStorage.getItem(key) || '[]');
         arr.unshift({name, msg, rating, ts: now});
-        localStorage.setItem(LS_KEY, JSON.stringify(arr.slice(0,200)));
+        localStorage.setItem(key, JSON.stringify(arr.slice(0,200)));
         // trigger storage for this tab
-        window.dispatchEvent(new StorageEvent('storage', { key: LS_KEY, newValue: JSON.stringify(arr) }));
+        window.dispatchEvent(new StorageEvent('storage', { key, newValue: JSON.stringify(arr) }));
       }
     };
 
     const FirebaseProvider = {
       mode: 'LIVE', db: null,
       async init(){
-        // load compat builds only when configured
         await new Promise((resolve)=>{
           const appTag = document.createElement('script');
           appTag.src = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js';
@@ -292,28 +332,32 @@
           appTag.onload = () => { document.head.appendChild(fsTag); fsTag.onload = resolve; };
           document.head.appendChild(appTag);
         });
-        // init
         const app = firebase.initializeApp(FIREBASE_CONFIG);
         this.db = firebase.firestore(app);
         return true;
       },
-      subscribe(cb){
-        return this.db.collection('reviews').orderBy('ts','desc').limit(50).onSnapshot((snap)=>{
+      subscribe(coinId, cb){
+        const ref = this.db.collection('coins').doc(coinId).collection('reviews').orderBy('ts','desc').limit(50);
+        const unsub = ref.onSnapshot((snap)=>{
           const list = [];
           snap.forEach(doc=> list.push(doc.data()));
           cb(list);
         });
+        return unsub; // caller should call to clean up when switching coins
       },
-      async post({name,msg,rating}){
-        return this.db.collection('reviews').add({
-          name, msg, rating,
-          ts: firebase.firestore.FieldValue.serverTimestamp()
-        });
+      async post(coinId, {name,msg,rating}){
+        const ref = this.db.collection('coins').doc(coinId).collection('reviews');
+        return ref.add({ name, msg, rating, ts: firebase.firestore.FieldValue.serverTimestamp() });
       }
     };
 
-    // ======= App =======
+    // ======= App State =======
     const $ = (id)=> document.getElementById(id);
+    const state = {
+      coin: 'REVIEW',
+      provider: null,
+      unsub: null,
+    };
 
     function copyCA(){
       const text = $('ca').innerText.replace('CA: ','');
@@ -362,24 +406,24 @@
       });
     })();
 
-    // App bootstrap with safe provider selection
+    // ======= Bootstrap =======
     (async function init(){
       const modeBadge = $('mode');
       const form = $('reviewForm');
       const list = $('reviewsList');
       const status = $('status');
 
+      // choose provider
       const Provider = isFirebaseConfigured() ? FirebaseProvider : LocalProvider;
+      state.provider = Provider;
       modeBadge.textContent = Provider.mode === 'LIVE' ? 'LIVE MODE' : 'LOCAL MODE';
 
-      try {
-        await Provider.init();
-      } catch (e) {
+      try { await Provider.init(); } catch (e) {
         console.error('[REVIEW] init failed, falling back to LocalProvider', e);
-        if(Provider !== LocalProvider){ await LocalProvider.init(); modeBadge.textContent = 'LOCAL MODE'; }
+        if(Provider !== LocalProvider){ state.provider = LocalProvider; await LocalProvider.init(); modeBadge.textContent = 'LOCAL MODE'; }
       }
 
-      // subscribe to feed
+      // subscribe renderer
       const render = (items=[])=>{
         list.innerHTML = '';
         items.forEach((data)=>{
@@ -395,13 +439,12 @@
           list.appendChild(d);
         });
       };
-      Provider.subscribe(render);
 
-      // form submit with rate limit
+      // wire form
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
         const now = Date.now();
-        const last = +localStorage.getItem('review_last_post')||0;
+        const last = +localStorage.getItem('review_last_post_'+state.coin)||0;
         const left = Math.max(0, RATE_LIMIT_S - Math.floor((now-last)/1000));
         if(left>0){ status.textContent = `Please wait ${left}s`; return; }
 
@@ -411,37 +454,78 @@
         if(!msg){ status.textContent = 'Write something first'; return; }
         status.textContent = 'Posting…';
         try{
-          await Provider.post({ name, msg, rating });
-          localStorage.setItem('review_last_post', String(now));
+          await state.provider.post(state.coin, { name, msg, rating });
+          localStorage.setItem('review_last_post_'+state.coin, String(now));
           form.reset(); $('rating').value = '5';
           [...document.querySelectorAll('.star-btn')].forEach(b=> b.setAttribute('aria-pressed', (+b.dataset.v)<=5 ? 'true' : 'false'));
           status.textContent = 'Posted!'; setTimeout(()=> status.textContent = '', 1200);
         }catch(err){ console.error(err); status.textContent = 'Error. Check console.'; }
       });
 
-      // Dev helper (long press badge clears local data)
-      let pressTimer; modeBadge.addEventListener('mousedown',()=>{ pressTimer=setTimeout(()=>{ if(confirm('Clear local reviews?')){ localStorage.removeItem(LS_KEY); window.location.reload(); } },900);});
-      modeBadge.addEventListener('mouseup',()=> clearTimeout(pressTimer));
+      // Disable switch coin button - show coming soon message
+      $('switchBtn').addEventListener('click', (e)=>{
+        e.preventDefault();
+        // Do nothing - coming soon functionality
+      });
+
+      // expose render for subscription
+      window.__renderReviews = render;
+
+      // coin routing
+      const initialCoin = 'REVIEW'; // Always default to REVIEW
+      switchCoin(initialCoin, {push:false});
     })();
+
+    // ======= Switching coins =======
+    function switchCoin(newCoin, {push=true}={}){
+      newCoin = 'REVIEW'; // Force to always be REVIEW
+      // cleanup previous listener
+      if(typeof state.unsub === 'function'){ try{ state.unsub(); }catch{} state.unsub=null; }
+      state.coin = newCoin;
+
+      // UI updates
+      $('coinView').textContent = '$' + newCoin;
+      $('coinTitle').textContent = '$' + newCoin;
+      $('coinLive').textContent = '$' + newCoin;
+      $('buyLabel').textContent = '$' + newCoin;
+      const ca = COIN_CA[newCoin] || 'N/A — set in COIN_CA map';
+      $('ca').textContent = 'CA: ' + ca;
+      $('coinInput').value = '';
+
+      // persist + URL
+      localStorage.setItem('review_last_coin', newCoin);
+      addRecentCoin(newCoin);
+      if(push) setURLCoin(newCoin);
+      renderRecentChips();
+
+      // subscribe to new coin
+      try {
+        state.unsub = state.provider.subscribe(newCoin, (items)=> window.__renderReviews(items));
+      } catch(err){ console.error('[REVIEW] subscribe failed', err); }
+    }
+
+    // ======= Recents =======
+    function addRecentCoin(c){
+      const arr = ['REVIEW']; // Only show REVIEW
+      localStorage.setItem(LS_RECENTS, JSON.stringify(arr));
+    }
+    function renderRecentChips(){
+      const wr = $('recentChips');
+      wr.innerHTML='';
+      // Only show REVIEW chip
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.textContent = '$REVIEW';
+      b.addEventListener('click', ()=> switchCoin('REVIEW', {push:true}));
+      wr.appendChild(b);
+    }
 
     // ======= Tiny self-tests (run in console) =======
     ;(function tests(){
       console.log('[REVIEW] Running self-tests...');
-      // Test star formatting
       if(fmtStars(0) === '☆☆☆☆☆') console.log('✓ fmtStars 0 test passed');
       if(fmtStars(3) === '★★★☆☆') console.log('✓ fmtStars 3 test passed');
       if(fmtStars(5) === '★★★★★') console.log('✓ fmtStars 5 test passed');
-      // Test rate limit math
-      const now = 100000; const last = now - (RATE_LIMIT_S-5)*1000; // 5s left
-      const left = Math.max(0, RATE_LIMIT_S - Math.floor((now-last)/1000));
-      if(left === 5) console.log('✓ rate-limit math test passed');
-      // Test local storage roundtrip (does not touch prod key)
-      const TEST_KEY = 'review_reviews_test';
-      const arr = [{name:'Test', msg:'ok', rating:5, ts:1}];
-      localStorage.setItem(TEST_KEY, JSON.stringify(arr));
-      const read = JSON.parse(localStorage.getItem(TEST_KEY)||'[]');
-      if(read.length === 1 && read[0].name === 'Test') console.log('✓ localStorage roundtrip test passed');
-      localStorage.removeItem(TEST_KEY);
       console.log('[REVIEW] Self-tests completed');
     })();
   </script>
