@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REVIEW COIN</title>
+  <meta name="description" content="REVIEW COIN — rate it, roast it, reward it." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --card: #101010;
+      --text: #fffbe6;
+      --muted: #c8c1a6;
+      --accent: #ffd54f; /* star gold */
+      --accent-dark: #e6b800;
+      --ring: #ffd54f55;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 500px at 50% -10%, var(--accent) 0%, transparent 40%), var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(6px); background: linear-gradient(180deg, #000000b3, #00000000); border-bottom: 1px solid #1c1c1c; }
+    .nav { max-width: 1100px; margin: 0 auto; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:1px; }
+    .brand .logo { width:28px; height:28px; }
+    .cta { display:flex; gap:10px; align-items:center; }
+    .btn { cursor:pointer; border:none; font-weight:800; letter-spacing:.3px; padding:10px 14px; border-radius:14px; }
+    .btn-primary { background: var(--accent); color:#0a0a0a; box-shadow: 0 0 40px #ffd54f40, inset 0 -6px 14px #00000033; }
+    .btn-ghost { background:#111; color:#f4f0db; border:1px solid #222; }
+
+    /* Hero */
+    .hero { max-width:1100px; margin: 40px auto; padding: 0 18px; display:grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items:center; }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+
+    .title { font-family: Nunito, Inter, sans-serif; font-size: clamp(28px, 4vw, 48px); line-height: .95; margin: 0 0 14px; text-shadow: 0 0 25px #ffd54f33; }
+    .subtitle { color:var(--muted); font-size: clamp(14px, 2.2vw, 18px); margin-bottom: 18px; }
+
+    .pill { display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:#141109; border:1px solid #2a2415; box-shadow: 0 0 24px #ffd54f1f; font-size: 14px; color:#ffefb5 }
+    .mode-pill { margin-left:8px; font-size:12px; padding:6px 10px; border-radius:999px; background:#111; border:1px solid #222; color:#ffed99 }
+
+    .coin-wrap { position: relative; width: min(520px, 90vw); aspect-ratio: 1/1; margin: 0 auto; }
+    .beam { position:absolute; inset:auto; top:-8%; left:50%; width:200%; height:80%; transform:translateX(-50%); background: radial-gradient(45% 100% at 50% 0%, var(--accent) 0%, transparent 70%); filter: blur(18px); opacity:.35; pointer-events:none; }
+
+    .coin { --size: 88%; position:absolute; inset: 0; margin:auto; width: var(--size); height: var(--size); border-radius: 50%; background: radial-gradient(120% 120% at 30% 30%, #ffe07a 0%, #ffd54f 40%, #f2c233 70%, #c19a1a 100%); box-shadow: 0 0 60px #ffd54f40, inset 0 0 26px #000000b0, 0 20px 80px #0a0a0a; border: 10px solid #0a0a0a; display:grid; place-items:center; position:relative; }
+    .coin::before { content:""; position:absolute; inset:-8px; border-radius:50%; border: 6px solid #0a0a0a; filter: drop-shadow(0 0 14px #ffd54f40); }
+
+    .coin .stars { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
+    .star { position:absolute; width:8%; aspect-ratio:1/1; filter: drop-shadow(0 0 10px #000000aa); fill:#0a0a0a }
+    .star:nth-child(1){ top:12%; left:28%; }
+    .star:nth-child(2){ top:18%; right:28%; }
+    .star:nth-child(3){ left:10%; top:44%; }
+    .star:nth-child(4){ right:10%; top:46%; }
+    .star:nth-child(5){ bottom:16%; left:26%; }
+    .star:nth-child(6){ bottom:18%; right:26%; }
+
+    .logo-big { width: 38%; }
+
+    .hero-cta { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .ca { display:flex; align-items:center; gap:10px; padding: 8px 10px; border-radius: 12px; background:#0e0e0e; border:1px solid #1f1f1f; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; color:#ffeaa8; }
+
+    /* Sections */
+    .section { max-width:1100px; margin: 40px auto 80px; padding: 0 18px; }
+    .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { background: linear-gradient(180deg, #13110a, #0a0a0a); border: 1px solid #2a2415; border-radius: 18px; padding: 18px; box-shadow: 0 10px 40px #ffd54f15; position: relative; overflow: hidden; }
+    .rating { color:#ffefb5; font-size: 14px; letter-spacing: 2px; margin-bottom: 8px; }
+    .who { font-weight: 800; margin-bottom: 8px; }
+    .say { color:#fff4c4; opacity:.9; }
+
+    .bubble-like { position:absolute; right:12px; bottom:12px; width:44px; height:44px; background:#0f0f0f; border:1px solid #1d1d1d; border-radius:50%; display:grid; place-items:center; }
+
+    footer { border-top:1px solid #161616; padding:24px 18px 60px; text-align:center; color:#e1d7af; }
+
+    /* Floating stars */
+    .floaters { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .floater { position:absolute; opacity:.08; animation: drift 24s linear infinite; }
+    @keyframes drift { from { transform: translateY(110vh) rotate(0deg); } to { transform: translateY(-20vh) rotate(360deg); } }
+
+    /* Utility */
+    .sr { position:absolute; width:1px; height:1px; clip:rect(0 0 0 0); overflow:hidden; }
+
+    /* Reviews form */
+    .review-wrap { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .review-form { background: linear-gradient(180deg, #13110a, #0a0a0a); border:1px solid #2a2415; border-radius:16px; padding:16px; }
+    .fields { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    @media (max-width:640px){ .fields{ grid-template-columns:1fr; } }
+    .field { display:flex; flex-direction:column; gap:6px; }
+    .field input, .field textarea { background:#0d0d0d; color:#ffefb5; border:1px solid #2a2415; border-radius:12px; padding:10px 12px; font: inherit; outline:none; }
+    .field textarea { min-height: 88px; resize: vertical; }
+    .stars-row { display:flex; align-items:center; gap:6px; }
+    .star-btn { width:32px; height:32px; border-radius:8px; border:1px solid #2a2415; background:#141109; display:grid; place-items:center; cursor:pointer; color:#ffd54f; }
+    .star-btn[aria-pressed="true"] { background:#191305; border-color:#78601b; box-shadow: 0 0 18px #ffd54f20 inset; }
+    .review-actions { display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:10px; }
+    .btn-small { padding:8px 12px; border-radius:10px; font-weight:800; border:none; cursor:pointer; }
+    .btn-accent { background: var(--accent); color:#0a0a0a; }
+
+    /* Live list */
+    .live-list { display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; }
+    @media (max-width:760px){ .live-list{ grid-template-columns:1fr; } }
+    .live-card { background: linear-gradient(180deg, #13110a, #0a0a0a); border:1px solid #2a2415; border-radius:16px; padding:14px; }
+    .live-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .live-who { font-weight:800; }
+    .live-rating { color:#ffefb5; font-size:13px; letter-spacing:2px; }
+    .live-msg { color:#fff4c4; opacity:.95; }
+  </style>
+</head>
+<body>
+  <!-- Floating stars -->
+  <div class="floaters" aria-hidden="true" id="floaters"></div>
+
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+        <span>REVIEW COIN</span>
+      </div>
+      <div class="cta">
+        <button class="btn btn-ghost" onclick="scrollToId('testimonials')">Reviews</button>
+        <button class="btn btn-primary" onclick="scrollToId('buy')">Buy</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="pill">★★★★★ community rated</span>
+        <span id="mode" class="mode-pill" title="Shows whether live backend is active">LOCAL MODE</span>
+        <h1 class="title">Everyone's got an opinion.<br/>Now make it on‑chain with <span style="color:var(--accent)">$REVIEW</span>.</h1>
+        <div class="hero-cta" id="buy">
+          <button class="btn btn-primary">Buy $REVIEW</button>
+          <button class="btn btn-ghost" onclick="copyCA()">Copy CA</button>
+          <span class="ca" id="ca">CA: REVIEW1111111111111111111111111111111111</span>
+        </div>
+      </div>
+      <div class="coin-wrap">
+        <div class="beam"></div>
+        <div class="coin">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+          </div>
+          <svg class="logo-big" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <h2 style="margin:0 0 14px; font-size: 24px; letter-spacing:.3px; color:#ffefb5">Recent Takes</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="rating">★★★★★</div>
+          <div class="who">Crazy Aper</div>
+          <div class="say">This coin slaps ★★★★★</div>
+          <div class="bubble-like">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+          </div>
+        </article>
+        <article class="card">
+          <div class="rating">★★★★★</div>
+          <div class="who">Top Blaster</div>
+          <div class="say">Yooo this goes hard</div>
+          <div class="bubble-like">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+          </div>
+        </article>
+        <article class="card">
+          <div class="rating">★★★★★</div>
+          <div class="who">Degen</div>
+          <div class="say">This is a legit coin</div>
+          <div class="bubble-like">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+          </div>
+        </article>
+        <article class="card">
+          <div class="rating">★★★★★</div>
+          <div class="who">Trencher</div>
+          <div class="say">So clean, I'm in</div>
+          <div class="bubble-like">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/></svg>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Live Reviews (real-time) -->
+    <section class="section" id="live-reviews">
+      <h2 style="margin:0 0 10px; font-size: 22px; letter-spacing:.3px; color:#ffefb5">Live Reviews</h2>
+      <p class="subtitle" style="margin:0 0 12px">Drop your take. It appears instantly for everyone.</p>
+
+      <div class="review-wrap">
+        <form class="review-form" id="reviewForm">
+          <div class="fields">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="e.g., Top Blaster" required />
+            </div>
+            <div class="field">
+              <label>Rating</label>
+              <div class="stars-row" id="starsRow" role="group" aria-label="rating">
+                <button type="button" class="star-btn" data-v="1" aria-pressed="false">★</button>
+                <button type="button" class="star-btn" data-v="2" aria-pressed="false">★</button>
+                <button type="button" class="star-btn" data-v="3" aria-pressed="false">★</button>
+                <button type="button" class="star-btn" data-v="4" aria-pressed="false">★</button>
+                <button type="button" class="star-btn" data-v="5" aria-pressed="true">★</button>
+              </div>
+              <input type="hidden" id="rating" name="rating" value="5" />
+            </div>
+          </div>
+          <div class="field" style="margin-top:6px;">
+            <label for="msg">Your review</label>
+            <textarea id="msg" name="msg" placeholder="Drop your review…" required></textarea>
+          </div>
+          <div class="review-actions">
+            <small id="status" style="opacity:.8"></small>
+            <button class="btn-small btn-accent" type="submit">Post Review</button>
+          </div>
+        </form>
+
+        <div id="reviewsList" class="live-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© <span id="yr"></span> REVIEW COIN — rate it, roast it, reward it.</div>
+  </footer>
+
+  <script>
+    // ======= Utilities =======
+    const RATE_LIMIT_S = 30; // one post / 30s
+    const LS_KEY = 'review_reviews_v1';
+    const sanitize = (s='') => s.replace(/[<>]/g, (m)=>({'<':'&lt;','>':'&gt;'}[m]));
+    const fmtStars = (n=5) => '★★★★★'.slice(0, Math.max(0,Math.min(5, n|0))).padEnd(5,'☆');
+
+    // determine if Firebase config is present (user can paste values below)
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyCnYxmmKYDlK-iugecBjY6jBzT2UnfNvto",
+      authDomain: "review-378ae.firebaseapp.com",
+      projectId: "review-378ae",
+      storageBucket: "review-378ae.firebasestorage.app",
+      messagingSenderId: "792101833699",
+      appId: "1:792101833699:web:f754cf6748a7ca1f53eed6",
+    };
+    const isFirebaseConfigured = () => FIREBASE_CONFIG && typeof FIREBASE_CONFIG === 'object' && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.apiKey;
+
+    // ======= Providers (Local & Firebase) =======
+    const LocalProvider = {
+      mode: 'LOCAL',
+      async init(){ return true; },
+      subscribe(cb){
+        const data = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+        cb(data.sort((a,b)=> (b.ts||0) - (a.ts||0)));
+        window.addEventListener('storage', (e)=>{ if(e.key===LS_KEY){ try{ cb(JSON.parse(e.newValue||'[]')); }catch{} } });
+      },
+      async post({name,msg,rating}){
+        const now = Date.now();
+        const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+        arr.unshift({name, msg, rating, ts: now});
+        localStorage.setItem(LS_KEY, JSON.stringify(arr.slice(0,200)));
+        // trigger storage for this tab
+        window.dispatchEvent(new StorageEvent('storage', { key: LS_KEY, newValue: JSON.stringify(arr) }));
+      }
+    };
+
+    const FirebaseProvider = {
+      mode: 'LIVE', db: null,
+      async init(){
+        // load compat builds only when configured
+        await new Promise((resolve)=>{
+          const appTag = document.createElement('script');
+          appTag.src = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js';
+          appTag.crossOrigin = 'anonymous';
+          const fsTag = document.createElement('script');
+          fsTag.src = 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js';
+          fsTag.crossOrigin = 'anonymous';
+          appTag.onload = () => { document.head.appendChild(fsTag); fsTag.onload = resolve; };
+          document.head.appendChild(appTag);
+        });
+        // init
+        const app = firebase.initializeApp(FIREBASE_CONFIG);
+        this.db = firebase.firestore(app);
+        return true;
+      },
+      subscribe(cb){
+        return this.db.collection('reviews').orderBy('ts','desc').limit(50).onSnapshot((snap)=>{
+          const list = [];
+          snap.forEach(doc=> list.push(doc.data()));
+          cb(list);
+        });
+      },
+      async post({name,msg,rating}){
+        return this.db.collection('reviews').add({
+          name, msg, rating,
+          ts: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    };
+
+    // ======= App =======
+    const $ = (id)=> document.getElementById(id);
+
+    function copyCA(){
+      const text = $('ca').innerText.replace('CA: ','');
+      navigator.clipboard.writeText(text).then(()=>{
+        const b = document.querySelector('.btn-ghost');
+        const old = b.textContent; b.textContent = 'Copied!';
+        setTimeout(()=> b.textContent = old, 900);
+      });
+    }
+    function scrollToId(id){ $(id)?.scrollIntoView({behavior:'smooth'}); }
+
+    // Floating stars
+    (function spawnStars(){
+      const floaters = $('floaters');
+      const COUNT = 10;
+      for(let i=0;i<COUNT;i++){
+        const el = document.createElementNS('http://www.w3.org/2000/svg','svg');
+        el.setAttribute('viewBox','0 0 24 24');
+        el.setAttribute('fill','#ffffff');
+        el.classList.add('floater');
+        const size = Math.random()*50 + 24; // 24–74
+        el.style.width = size + 'px';
+        el.style.left = Math.random()*100 + 'vw';
+        el.style.animationDelay = (Math.random()*-24)+'s';
+        el.style.animationDuration = (18 + Math.random()*14)+'s';
+        el.innerHTML = '<path d="M12 2l2.5 6.9 7.5.7-5.7 4.6 1.9 7.2-6.2-3.9-6.2 3.9 1.9-7.2L2 9.6l7.5-.7z"/>';
+        floaters.appendChild(el);
+      }
+    })();
+
+    // Year
+    $('yr').textContent = new Date().getFullYear();
+
+    // Star UI
+    (function starControls(){
+      const starRow = $('starsRow');
+      const ratingEl = $('rating');
+      starRow?.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.star-btn');
+        if(!btn) return;
+        const val = +btn.dataset.v;
+        ratingEl.value = String(val);
+        [...starRow.querySelectorAll('.star-btn')].forEach(b=>{
+          b.setAttribute('aria-pressed', (+b.dataset.v)<=val ? 'true' : 'false');
+        });
+      });
+    })();
+
+    // App bootstrap with safe provider selection
+    (async function init(){
+      const modeBadge = $('mode');
+      const form = $('reviewForm');
+      const list = $('reviewsList');
+      const status = $('status');
+
+      const Provider = isFirebaseConfigured() ? FirebaseProvider : LocalProvider;
+      modeBadge.textContent = Provider.mode === 'LIVE' ? 'LIVE MODE' : 'LOCAL MODE';
+
+      try {
+        await Provider.init();
+      } catch (e) {
+        console.error('[REVIEW] init failed, falling back to LocalProvider', e);
+        if(Provider !== LocalProvider){ await LocalProvider.init(); modeBadge.textContent = 'LOCAL MODE'; }
+      }
+
+      // subscribe to feed
+      const render = (items=[])=>{
+        list.innerHTML = '';
+        items.forEach((data)=>{
+          const d = document.createElement('article');
+          d.className = 'live-card';
+          d.innerHTML = `
+            <div class="live-head">
+              <div class="live-who">${sanitize(data.name||'Anon')}</div>
+              <div class="live-rating">${fmtStars(+data.rating||5)}</div>
+            </div>
+            <div class="live-msg">${sanitize(data.msg||'')}</div>
+          `;
+          list.appendChild(d);
+        });
+      };
+      Provider.subscribe(render);
+
+      // form submit with rate limit
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const now = Date.now();
+        const last = +localStorage.getItem('review_last_post')||0;
+        const left = Math.max(0, RATE_LIMIT_S - Math.floor((now-last)/1000));
+        if(left>0){ status.textContent = `Please wait ${left}s`; return; }
+
+        const name = $('name').value.trim().slice(0,40) || 'Anon';
+        const msg = $('msg').value.trim().slice(0,300);
+        const rating = +$('rating').value || 5;
+        if(!msg){ status.textContent = 'Write something first'; return; }
+        status.textContent = 'Posting…';
+        try{
+          await Provider.post({ name, msg, rating });
+          localStorage.setItem('review_last_post', String(now));
+          form.reset(); $('rating').value = '5';
+          [...document.querySelectorAll('.star-btn')].forEach(b=> b.setAttribute('aria-pressed', (+b.dataset.v)<=5 ? 'true' : 'false'));
+          status.textContent = 'Posted!'; setTimeout(()=> status.textContent = '', 1200);
+        }catch(err){ console.error(err); status.textContent = 'Error. Check console.'; }
+      });
+
+      // Dev helper (long press badge clears local data)
+      let pressTimer; modeBadge.addEventListener('mousedown',()=>{ pressTimer=setTimeout(()=>{ if(confirm('Clear local reviews?')){ localStorage.removeItem(LS_KEY); window.location.reload(); } },900);});
+      modeBadge.addEventListener('mouseup',()=> clearTimeout(pressTimer));
+    })();
+
+    // ======= Tiny self-tests (run in console) =======
+    ;(function tests(){
+      console.log('[REVIEW] Running self-tests...');
+      // Test star formatting
+      if(fmtStars(0) === '☆☆☆☆☆') console.log('✓ fmtStars 0 test passed');
+      if(fmtStars(3) === '★★★☆☆') console.log('✓ fmtStars 3 test passed');
+      if(fmtStars(5) === '★★★★★') console.log('✓ fmtStars 5 test passed');
+      // Test rate limit math
+      const now = 100000; const last = now - (RATE_LIMIT_S-5)*1000; // 5s left
+      const left = Math.max(0, RATE_LIMIT_S - Math.floor((now-last)/1000));
+      if(left === 5) console.log('✓ rate-limit math test passed');
+      // Test local storage roundtrip (does not touch prod key)
+      const TEST_KEY = 'review_reviews_test';
+      const arr = [{name:'Test', msg:'ok', rating:5, ts:1}];
+      localStorage.setItem(TEST_KEY, JSON.stringify(arr));
+      const read = JSON.parse(localStorage.getItem(TEST_KEY)||'[]');
+      if(read.length === 1 && read[0].name === 'Test') console.log('✓ localStorage roundtrip test passed');
+      localStorage.removeItem(TEST_KEY);
+      console.log('[REVIEW] Self-tests completed');
+    })();
+  </script>
+</body>
+</html>
